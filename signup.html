@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Login System | Signup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="auth-card info-card">
+      <div class="info-copy">
+        <p class="eyebrow">Account Protection</p>
+        <h1>Create a secure account</h1>
+        <p class="panel-copy">
+          Build a strong password with live feedback before saving your account to the database.
+        </p>
+      </div>
+
+      <div class="security-badges">
+        <span>bcrypt hashing</span>
+        <span>MongoDB storage</span>
+        <span>Live validation</span>
+      </div>
+
+      <div class="strength-card">
+        <div class="strength-heading">
+          <p class="strength-label">Password strength</p>
+          <p id="strengthText" class="strength-text">Weak</p>
+        </div>
+        <div id="strengthMeter" class="strength-meter weak"></div>
+
+        <div id="validationList" class="validation-list">
+          <div class="validation-item invalid" data-rule="length">Minimum 8 characters</div>
+          <div class="validation-item invalid" data-rule="uppercase">At least 1 uppercase letter</div>
+          <div class="validation-item invalid" data-rule="lowercase">At least 1 lowercase letter</div>
+          <div class="validation-item invalid" data-rule="number">At least 1 number</div>
+          <div class="validation-item invalid" data-rule="special">At least 1 special character</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="auth-card form-card">
+      <div class="panel-header">
+        <p class="eyebrow">Signup</p>
+        <h2>Create account</h2>
+        <p>Fill in your details and choose a strong password.</p>
+      </div>
+
+      <form id="signupForm" class="auth-form">
+        <label for="signupName">Full name</label>
+        <input id="signupName" name="name" type="text" placeholder="Your full name" required>
+
+        <label for="signupEmail">Email address</label>
+        <input id="signupEmail" name="email" type="email" placeholder="you@example.com" required>
+        <p id="signupEmailError" class="field-message" aria-live="polite"></p>
+
+        <label for="signupPassword">Password</label>
+        <input id="signupPassword" name="password" type="password" placeholder="Create a strong password" required>
+        <p id="passwordHint" class="field-message" aria-live="polite"></p>
+
+        <button id="signupButton" type="submit" class="primary-btn">
+          <span class="button-text">Create Account</span>
+          <span class="button-loader" aria-hidden="true"></span>
+        </button>
+        <p id="signupMessage" class="form-message" aria-live="polite"></p>
+      </form>
+
+      <p class="switch-text">
+        Already have an account?
+        <a href="login.html">Go to login</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

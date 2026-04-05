@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Login System | Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- 🔐 AUTH CHECK -->
+<script>
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.location.href = "/login.html";
+  }
+</script>
+
+<main class="dashboard-shell">
+  <section class="dashboard-hero">
+    <div class="hero-badge">Secure Access Granted</div>
+    <h1>Welcome to your dashboard</h1>
+    <p id="welcomeUser" class="dashboard-user">Hello, User</p>
+
+    <p class="dashboard-copy">
+      Login successful. Your account is protected with secure password hashing,
+      server-side validation, and a clean cyber-style interface.
+    </p>
+
+    <div class="dashboard-actions">
+      <a class="primary-btn dashboard-btn" href="login.html">Back to Login</a>
+      <a class="ghost-btn dashboard-btn" href="signup.html">Create Another User</a>
+
+      <!-- 🔥 LOGOUT BUTTON -->
+      <button onclick="logout()" class="primary-btn dashboard-btn">Logout</button>
+    </div>
+  </section>
+
+  <section class="dashboard-grid">
+    <article class="dashboard-card highlight-card">
+      <p class="card-label">Status</p>
+      <h2>Login Successful</h2>
+      <p class="card-copy">
+        Your credentials were verified correctly and access was granted.
+      </p>
+    </article>
+
+    <article class="dashboard-card">
+      <p class="card-label">Security</p>
+      <div class="mini-stat">bcrypt password hashing</div>
+      <div class="mini-stat">MongoDB user storage</div>
+      <div class="mini-stat">Strong password rules</div>
+    </article>
+
+    <article class="dashboard-card">
+      <p class="card-label">Quick Overview</p>
+      <div class="stats-row">
+        <div class="stat-box">
+          <strong>5</strong>
+          <span>Password checks</span>
+        </div>
+        <div class="stat-box">
+          <strong>24/7</strong>
+          <span>Protected access</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="dashboard-card">
+      <p class="card-label">Recent Activity</p>
+      <div id="activityList" class="activity-list">
+        <p class="card-copy">Loading recent login activity...</p>
+      </div>
+    </article>
+  </section>
+</main>
+
+<!-- 🔥 LOGOUT SCRIPT -->
+<script>
+const savedUserName = localStorage.getItem("userName") || "User";
+const welcomeUser = document.getElementById("welcomeUser");
+const activityList = document.getElementById("activityList");
+
+if (welcomeUser) {
+  welcomeUser.textContent = `Hello, ${savedUserName}`;
+}
+
+async function loadRecentActivity() {
+  if (!activityList) return;
+
+  try {
+    const response = await fetch("/api/auth/activity");
+    const data = await response.json();
+
+    if (!response.ok || !data.entries) {
+      throw new Error("Unable to load activity.");
+    }
+
+    if (data.entries.length === 0) {
+      activityList.innerHTML = '<p class="card-copy">No login activity recorded yet.</p>';
+      return;
+    }
+
+    activityList.innerHTML = data.entries
+      .map((entry) => {
+        const time = new Date(entry.timestamp).toLocaleString();
+        return `
+          <div class="activity-item">
+            <div class="activity-top">
+              <span class="activity-email">${entry.email}</span>
+              <span class="activity-status ${entry.status}">${entry.status}</span>
+            </div>
+            <p class="activity-reason">${entry.reason}</p>
+            <p class="activity-time">${time}</p>
+          </div>
+        `;
+      })
+      .join("");
+  } catch (error) {
+    activityList.innerHTML = '<p class="card-copy">Could not load recent activity.</p>';
+  }
+}
+
+loadRecentActivity();
+
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("userName");
+  window.location.href = "/login.html";
+}
+</script>
+
+</body>
+</html>

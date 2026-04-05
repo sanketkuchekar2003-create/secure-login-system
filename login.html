@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Login System | Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="auth-card info-card">
+      <div class="info-copy">
+        <p class="eyebrow">Cyber Security Project</p>
+        <h1>Secure login system</h1>
+        <p class="panel-copy">
+          Sign in with protected credentials, server-side validation, and safe password verification.
+        </p>
+      </div>
+
+      <ul class="feature-list">
+        <li>Clear backend status codes</li>
+        <li>Secure password hashing with bcrypt</li>
+        <li>Responsive and beginner-friendly UI</li>
+      </ul>
+
+      <div class="mini-note">
+        <strong>Demo login:</strong> Use <code>test@gmail.com</code> and <code>Test@123</code> when MongoDB is not running.
+      </div>
+    </section>
+
+    <section class="auth-card form-card">
+      <div class="panel-header">
+        <p class="eyebrow">Login</p>
+        <h2>Welcome back</h2>
+        <p>Enter your email and password to access your account.</p>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <label for="loginEmail">Email address</label>
+        <input id="loginEmail" name="email" type="email" placeholder="you@example.com" required>
+        <p id="loginEmailError" class="field-message" aria-live="polite"></p>
+
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" name="password" type="password" placeholder="Enter your password" required>
+
+        <button id="loginButton" type="submit" class="primary-btn">
+          <span class="button-text">Login</span>
+          <span class="button-loader" aria-hidden="true"></span>
+        </button>
+        <p id="loginMessage" class="form-message" aria-live="polite"></p>
+      </form>
+
+      <p class="switch-text">
+        Do not have an account?
+        <a href="signup.html">Create one</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
